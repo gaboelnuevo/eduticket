@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bigchaindb-driver": "^0.3.0",
+    "body-parser": "^1.17.2",
     "express": "^4.15.4"
   }
 }
