@@ -14,6 +14,7 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "mongoose": "^4.11.8",
+    "postmark": "^1.4.1",
     "shortid": "^2.2.8"
   }
 }

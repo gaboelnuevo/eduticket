@@ -9,7 +9,7 @@ var cors = require('cors')
 
 mongoose.connect('mongodb://admin:password$1234@ds161483.mlab.com:61483/eduticket');
 
-var Transaction = mongoose.model('Transaction', new Schema ({ email: String, date: Date, ticket: Object, asset: Object, current: Boolean, completed: Boolean }));
+var Transaction = mongoose.model('Transaction', new Schema ({ fullname: String, email: String, date: Date, ticket: Object, asset: Object, current: Boolean, completed: Boolean }));
 var PayToken = mongoose.model('PayToken', new Schema ({ secret: String, used: Boolean  }));
 
 const driver = require('bigchaindb-driver')
@@ -28,6 +28,10 @@ app.get('/', function (req, res) {
 app.post('/buy-ticket', function (req, res){
     var email = req.body.email;
     var token = req.body.token;
+    var fullname = req.body.fullname;
+
+    var _client = new postmark.Client(proccess.env.POSTMARK_TOKEN);
+
     if(!email && !token){
         return res.status(403);
     }
@@ -77,6 +81,14 @@ app.post('/buy-ticket', function (req, res){
                 _token.used = true;
                 _token.save().then(__token => {
                     transaction.save().then(_t => {
+                        // _client.sendEmailWithTemplate({
+                        //     "From": "eduticket@itstimebro.com",
+                        //     "To": email,
+                        //     "TemplateId": process.env.POSTMARK_NOTIFICATION_TEMPLATEID,
+                        //     "TemplateModel": {
+                        //       "name": fullname || '',
+                        //     }
+                        // });
                         return res.json(transaction)
                     }
                     );
@@ -120,7 +132,7 @@ app.get('/random', function (req, res){
 app.get('/count', function (req, res){
     var filter = {completed: true, current: true}
     Transaction.count(filter).exec(function(err, count){
-        res.json(count || 0);
+        res.json({count: count || 0});
     });
 })
 
