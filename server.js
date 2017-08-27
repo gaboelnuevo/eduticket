@@ -169,6 +169,7 @@ app.post('/generate-pay-token', function(req, res) {
 })
 
 app.get('/random', function(req, res) {
+    var shouldSend = !!req.query.send || false
     var filter = {
         completed: true,
         current: true
@@ -179,7 +180,8 @@ app.get('/random', function(req, res) {
             function(err, result) {
                 // result is random 
                 try {
-                    _client.sendEmailWithTemplate({
+                    if(shouldSend){
+                        _client.sendEmailWithTemplate({
                             "From": "eduticket@itstimebro.com",
                             "To": result.email,
                             "TemplateId": process.env.POSTMARK_WINNER_TEMPLATEID,
@@ -206,6 +208,7 @@ app.get('/random', function(req, res) {
                         .catch(err => {
                             console.log(err);
                         })
+                    }
                 } catch (err) {
                     console.log(err);
                 }
