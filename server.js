@@ -113,6 +113,8 @@ app.post('/buy-ticket', function(req, res) {
                                                 "TemplateModel": {
                                                     "purchase_date": "purchase_date_Value",
                                                     "name": fullname || '',
+                                                    "transaction_id": transaction._id.toString(),
+                                                    "ticket": ticket.publicKey.toString(),
                                                     "expiration_date": "28/08/2017",
                                                     "credit_card_brand": "credit_card_brand_Value",
                                                     "credit_card_last_four": "credit_card_last_four_Value",
@@ -189,6 +191,7 @@ app.get('/random', function(req, res) {
                             "TemplateModel": {
                                 "purchase_date": "purchase_date_Value",
                                 "name": result.fullname || result.email,
+                                "transaction_id": result._id.toString(),
                                 "expiration_date": "28/08/2017",
                                 "credit_card_brand": "credit_card_brand_Value",
                                 "credit_card_last_four": "credit_card_last_four_Value",
