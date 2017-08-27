@@ -78,7 +78,7 @@ app.post('/buy-ticket', function(req, res) {
                         {
                             transaction_id: 'eduticket:' + transaction._id,
                             datetime: new Date().toString(),
-                            type: 'raffle:eduticket'
+                            type: 'raffle:eduticket_honducamp.tech'
                         },
 
                         // Metadata contains information about the transaction itself
@@ -152,7 +152,7 @@ app.post('/buy-ticket', function(req, res) {
 })
 
 app.get('/tickets', function(req, res) {
-    bdb.searchAssets('raffle:eduticket').then((tickets) => res.json({
+    bdb.searchAssets('raffle:eduticket_honducamp.tech').then((tickets) => res.json({
         tickets: tickets
     }))
 })
