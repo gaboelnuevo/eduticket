@@ -31,7 +31,7 @@ app.post('/buy-ticket', function (req, res){
     var token = req.body.token;
     var fullname = req.body.fullname;
 
-    var _client = new postmark.Client(proccess.env.POSTMARK_TOKEN);
+    var _client = new postmark.Client(process.env.POSTMARK_TOKEN);
 
     if(!email && !token){
         return res.status(403);
@@ -82,31 +82,35 @@ app.post('/buy-ticket', function (req, res){
                 _token.used = true;
                 _token.save().then(__token => {
                     transaction.save().then(_t => {
-                        _client.sendEmailWithTemplate({
-                            "From": "eduticket@itstimebro.com",
-                            "To": email,
-                            "TemplateId": process.env.POSTMARK_NOTIFICATION_TEMPLATEID,
-                            "TemplateModel": {
-                                "purchase_date": "purchase_date_Value",
-                                "name": fullname || '',
-                                "expiration_date": "28/08/2017",
-                                "credit_card_brand": "credit_card_brand_Value",
-                                "credit_card_last_four": "credit_card_last_four_Value",
-                                "billing_url": "billing_url_Value",
-                                "receipt_id": "receipt_id_Value",
-                                "date": "date_Value",
-                                "receipt_details": [
-                                    {
-                                        "description": "description_Value",
-                                        "amount": "amount_Value"
-                                    }
-                                ],
-                                "total": "20 Lps.",
-                                "support_url": "support_url_Value",
-                                "action_url": "action_url_Value"
-                            }
-                        });
-                        return res.json(transaction)
+                        try {
+                            _client.sendEmailWithTemplate({
+                                "From": "eduticket@itstimebro.com",
+                                "To": email,
+                                "TemplateId": process.env.POSTMARK_NOTIFICATION_TEMPLATEID,
+                                "TemplateModel": {
+                                    "purchase_date": "purchase_date_Value",
+                                    "name": fullname || '',
+                                    "expiration_date": "28/08/2017",
+                                    "credit_card_brand": "credit_card_brand_Value",
+                                    "credit_card_last_four": "credit_card_last_four_Value",
+                                    "billing_url": "billing_url_Value",
+                                    "receipt_id": "receipt_id_Value",
+                                    "date": "date_Value",
+                                    "receipt_details": [
+                                        {
+                                            "description": "description_Value",
+                                            "amount": "amount_Value"
+                                        }
+                                    ],
+                                    "total": "20 Lps.",
+                                    "support_url": "support_url_Value",
+                                    "action_url": "action_url_Value"
+                                }
+                            });
+                        }catch(err){
+                            console.log(err);
+                        }
+                        res.json(transaction)
                     }
                     );
                 })
