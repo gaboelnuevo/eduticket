@@ -115,6 +115,13 @@ app.get('/random', function (req, res){
     });
 })
 
+app.get('/count', function (req, res){
+    var filter = {completed: true, current: true}
+    Transaction.count(filter).exec(function(err, count){
+        res.json(count || 0);
+    });
+})
+
 
 var PORT = process.env.PORT || 3000;
 
