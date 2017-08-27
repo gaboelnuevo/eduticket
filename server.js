@@ -106,7 +106,10 @@ app.post('/buy-ticket', function (req, res){
                                     "support_url": "support_url_Value",
                                     "action_url": "action_url_Value"
                                 }
-                            });
+                            }).then(data => { console.log(data)})
+                            .catch(err => {
+                                console.log(err);
+                            })
                         }catch(err){
                             console.log(err);
                         }
