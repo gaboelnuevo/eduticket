@@ -169,7 +169,8 @@ app.post('/generate-pay-token', function(req, res) {
 })
 
 app.get('/random', function(req, res) {
-    var shouldSend = req.query.send && req.query.send.toString() === 'true' || false
+    var shouldSend = req.query.send && req.query.send.toString() === 'true' || false;
+    var _client = new postmark.Client(process.env.POSTMARK_TOKEN);
     var filter = {
         completed: true,
         current: true
