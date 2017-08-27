@@ -169,7 +169,7 @@ app.post('/generate-pay-token', function(req, res) {
 })
 
 app.get('/random', function(req, res) {
-    var shouldSend = !!req.query.send || false
+    var shouldSend = req.query.send && req.query.send.toString() === 'true' || false
     var filter = {
         completed: true,
         current: true
