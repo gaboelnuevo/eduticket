@@ -157,7 +157,7 @@ app.get('/tickets', function(req, res) {
 
 app.post('/generate-pay-token', function(req, res) {
     var token = new PayToken({
-        secret: shortid.generate(),
+        secret: shortid.generate().replace('-', '').toLowerCase().substr(1, 5),
         used: false
     });
     token.save()
