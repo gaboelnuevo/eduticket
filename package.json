@@ -11,6 +11,7 @@
   "dependencies": {
     "bigchaindb-driver": "^0.3.0",
     "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "mongoose": "^4.11.8",
     "shortid": "^2.2.8"

@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var shortid = require('shortid');
+var cors = require('cors')
 
 mongoose.connect('mongodb://admin:password$1234@ds161483.mlab.com:61483/eduticket');
 
@@ -18,6 +19,7 @@ let bdb = new driver.Connection('https://test.ipdb.io/api/v1/', {
 })
 
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
